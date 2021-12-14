@@ -1,21 +1,75 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {Text, TouchableOpacity, View } from 'react-native';
+import { Actions, Router, Scene } from 'react-native-router-flux';
+import Inputs from './Inputs';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+const Home = () => {
+  const goToAbout = () => {
+    Actions.about();
+  };
+  const goToForm = () => {
+    Actions.form();
+  };
+
+
+  return(
+<View>
+      <TouchableOpacity style={{margin: 128}} onPress={goToAbout}>
+      <Text>This is HOME!</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={{margin: 128}} onPress={goToForm}>
+      <Text>This is Form!</Text>
+      </TouchableOpacity>,
+      
+      </View>
   );
-}
+};
+const Form = () => {
+  const goToHome = () => {
+    Actions.home();
+  };
+  return(
+    <View>
+      <TouchableOpacity style={{margin: 128}} onPress={goToHome}>
+      <Text>This is ABOUT!</Text>
+    </TouchableOpacity>
+    <Inputs/>
+  </View>
+  );
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const About = () => {
+  const goToHome = () => {
+    Actions.home();
+  };
+  const goToForm = () => {
+    Actions.form();
+  };
+
+  return(
+    <View>
+    <TouchableOpacity style={{margin: 128}} onPress={goToHome}>
+      <Text>This is ABOUT!</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={{margin: 128}} onPress={goToForm}>
+    <Text>This is Form!</Text>
+  </TouchableOpacity>
+  </View>
+  );
+};
+
+const App = () => {
+  return(
+  <Router>
+    <Scene>
+      <Scene key="home" component={Home} title="Home" initial={true}></Scene>
+      <Scene key="about" component={About} title="About"></Scene>
+      <Scene key="form" component={Form} title="Form"></Scene>
+    </Scene>
+  </Router>
+  )
+};
+
+export default App;
