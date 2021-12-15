@@ -5,7 +5,8 @@ export const Matches = () => {
   const [User,setUser] =useState("");
   const [SelectedYear,setSelectedYear] =useState(2011);
   const [totalMatches,settotalMatches] =useState(0);
-  const [result,setResult]=useState([]);
+  const [data,setData]=useState([]);
+
 
  
   const UpdateUser = (User) => {
@@ -17,9 +18,17 @@ export const Matches = () => {
 
         )
         .then((response)=>response.json())
-        .then((result))
+        .then((result)=>{
+        
+      
 
-  })
+            setSelectedYear(SelectedYear);
+            setData(result.data);
+            settotalMatches(result.data.length);
+        }) ;
+
+  },[SelectedYear]);
+  console.log(data);
   return (
     <View>
        <Picker selectedValue = {setUser} onValueChange = {UpdateUser}>
