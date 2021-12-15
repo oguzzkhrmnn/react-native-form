@@ -1,8 +1,9 @@
 
 import React from 'react';
-import {Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View,Image } from 'react-native';
 import { Actions, Router, Scene } from 'react-native-router-flux';
 import Inputs from './Inputs';
+import { Matches } from './Matches';
 
 
 const Home = () => {
@@ -12,17 +13,24 @@ const Home = () => {
   const goToForm = () => {
     Actions.form();
   };
+  const goToMatches = () => {
+    Actions.matches();
+  };
 
 
   return(
 <View>
       <TouchableOpacity style={{margin: 128}} onPress={goToAbout}>
-      <Text>This is HOME!</Text>
-      </TouchableOpacity>,
+      <Text>This is About!</Text>
+      <Image source={require('./img/goz.png')} />
+      </TouchableOpacity>
       <TouchableOpacity style={{margin: 128}} onPress={goToForm}>
       <Text>This is Form!</Text>
-      </TouchableOpacity>,
-      
+      <Image source={require('./img/goz.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity style={{margin: 128}} onPress={goToMatches}>
+      <Text>This is Matches</Text>
+      </TouchableOpacity>
       </View>
   );
 };
@@ -33,9 +41,13 @@ const Form = () => {
   return(
     <View>
       <TouchableOpacity style={{margin: 128}} onPress={goToHome}>
-      <Text>This is ABOUT!</Text>
+      <Text>This is Home!</Text>
     </TouchableOpacity>
     <Inputs/>
+    <Image source={require('./img/tablo.jpg')} 
+      style={{ width: 200, height: 150 }}
+    />
+  
   </View>
   );
 };
@@ -51,11 +63,14 @@ const About = () => {
   return(
     <View>
     <TouchableOpacity style={{margin: 128}} onPress={goToHome}>
-      <Text>This is ABOUT!</Text>
+      <Text>This is Home!</Text>
+    
     </TouchableOpacity>
     <TouchableOpacity style={{margin: 128}} onPress={goToForm}>
     <Text>This is Form!</Text>
   </TouchableOpacity>
+  
+
   </View>
   );
 };
@@ -67,6 +82,7 @@ const App = () => {
       <Scene key="home" component={Home} title="Home" initial={true}></Scene>
       <Scene key="about" component={About} title="About"></Scene>
       <Scene key="form" component={Form} title="Form"></Scene>
+      <Scene key="matches" component={Matches} title="Matches"></Scene>
     </Scene>
   </Router>
   )
