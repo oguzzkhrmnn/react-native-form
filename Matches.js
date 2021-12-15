@@ -29,7 +29,7 @@ export const Matches = () => {
 
     let years = [];
 
-    data.forEach((eleman) => {
+    data?.forEach((eleman) => {
         years.push(eleman.year);
     });
 
@@ -39,7 +39,7 @@ export const Matches = () => {
         });
         return (
             <>
-                <Picker style={styles.picker} selectedValue={selectedYear} onValueChange>
+                <Picker style={styles.picker} selectedValue={selectedYear} onValueChange={updateYear}>
                     {pickerYears}
                 </Picker>
             </>
