@@ -1,51 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import {Text,  View,StyleSheet,Picker} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { Text, Picker, View, StyleSheet, Button } from "react-native";
+
 
 export const Matches = () => {
-  const [User,setUser] =useState("");
-  const [SelectedYear,setSelectedYear] =useState(2011);
-  const [totalMatches,settotalMatches] =useState(0);
-  const [data,setData]=useState([]);
 
+    //const [user, setUser] = useState([]);
+    const [selectedYear, setSelectedYear] = useState(2011);
+    const [totalMatches, setTotalMatches] = useState(0);
+    const [data, setData] = useState([]);
 
- 
-  const UpdateUser = (User) => {
-    setUser(User);
-  };
+    const updateYear = (year) => {
+        setSelectedYear(year);
+    };
 
-  useEffect(() => {
-        fetch(`https://jsonmock.hackerrank.com/api/football_competitions?year=$(SelectedYear)`
+    useEffect(() => {
 
+        fetch(
+            `https://jsonmock.hackerrank.com/api/football_competitions`
         )
-        .then((response)=>response.json())
-        .then((result)=>{
-        
-      
 
-            setSelectedYear(SelectedYear);
+            .then((response) => response.json())
+            .then((result) => {
+            setSelectedYear(selectedYear);
             setData(result.data);
-            settotalMatches(result.data.length);
-        }) ;
+            setTotalMatches(result.data.length);
+            });
+    }, [selectedYear]);
 
-  },[SelectedYear]);
-  console.log(data);
-  return (
-    <View>
-       <Picker selectedValue = {setUser} onValueChange = {UpdateUser}>
-          <Picker.Item label = "Steve" value = "steve" />
-          <Picker.Item label = "Ellen" value = "ellen" />
-          <Picker.Item label = "Maria" value = "maria" />
-       </Picker>
-       <Text style = {styles.text}>{setUser}</Text>
-    </View>
- );
-  };
+    let years = [];
+
+    data.forEach((eleman) => {
+        years.push(eleman.year);
+    });
+
+    const yearsForPicker = () => {
+        let pickerYears = years.map((year) => {
+            return <Picker.Item label={year} value={year} />
+        });
+        return (
+            <>
+                <Picker style={styles.picker} selectedValue={selectedYear} onValueChange>
+                    {pickerYears}
+                </Picker>
+            </>
+        )
+    };
+    return (
+        <View>
+            {yearsForPicker()}
+            <Button style={styles.button} onPress={updateYear} title="updateYear" color="black" />
+            <Text style={styles.text}>{selectedYear}</Text>
+        </View>
+    )
+};
+
 export default Matches
 
 const styles = StyleSheet.create({
-   text: {
-      fontSize: 30,
-      alignSelf: 'center',
-      color: 'red'
-   }
-});
+    button: {
+        alignSelf: "center"
+    },
+    text: {
+        fontSize: 30,
+        alignSelf: 'center',
+        color: 'red'
+    }
+})
+
